@@ -7,8 +7,8 @@ export class UsersService {
   constructor(
     @Inject('USERS_MODEL')
     private usersModel: Model<Users>,
-    ) { }
-    getAllUsers(): Promise<Users[]> {
-      return this.usersModel.find();
-    }
+  ) {}
+  getAllUsers(): Promise<Users[]> {
+    return this.usersModel.find();
+  }
 }
