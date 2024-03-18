@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 
 @Controller('users')
@@ -11,6 +11,15 @@ export class UsersController {
   @Get()
   gatAllUsers() {
     return this.usersService.getAllUsers();
+  }
+  // ====================================================================== \\
+  // ====================================================================== \\
+  // @desc  Get User By Id
+  // @Route Get /users/:userId
+  // @access  Private [Admin, Manger]
+  @Get(':userId')
+  gatUsersById(@Param('userId') userId: string) {
+    return this.usersService.gatUsersById(userId);
   }
   // ====================================================================== \\
 }

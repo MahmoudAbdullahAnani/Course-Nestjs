@@ -11,4 +11,9 @@ export class UsersService {
   getAllUsers(): Promise<Users[]> {
     return this.usersModel.find();
   }
+  gatUsersById(userId: string): Promise<Users[]> {
+
+    
+    return this.usersModel.findById(userId);
+  }
 }
