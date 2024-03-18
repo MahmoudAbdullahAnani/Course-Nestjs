@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -47,11 +48,20 @@ export class UsersController {
   // @Route Patch /users/:userId
   // @access  Private [Admin, Manger]
   @Patch(':userId')
-  updateUser(@Param('userId') userId: string,
+  updateUser(
+    @Param('userId') userId: string,
     @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
     body: updateUserDto,
   ) {
     return this.usersService.updateUser(userId, body);
+  }
+  // ====================================================================== \\
+  // @desc  Delete User By Id
+  // @Route Delete /users/:userId
+  // @access  Private [Admin]
+  @Delete(':userId')
+  deleteUser(@Param('userId') userId: string) {
+    return this.usersService.deleteUser(userId);
   }
   // ====================================================================== \\
 }
