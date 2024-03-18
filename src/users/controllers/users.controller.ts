@@ -3,11 +3,13 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { createUserDto } from '../dto/createUserDto.dto';
+import { updateUserDto } from '../dto/updateUserDto.dto';
 
 @Controller('users')
 export class UsersController {
@@ -30,8 +32,6 @@ export class UsersController {
     return this.usersService.gatUsersById(userId);
   }
   // ====================================================================== \\
-  // ====================================================================== \\
-  // ====================================================================== \\
   // @desc  Create User
   // @Route Post /users
   // @access  Private [Admin]
@@ -41,6 +41,17 @@ export class UsersController {
     body: createUserDto,
   ) {
     return this.usersService.createUser(body);
+  }
+  // ====================================================================== \\
+  // @desc  Update User By Id
+  // @Route Patch /users/:userId
+  // @access  Private [Admin, Manger]
+  @Patch(':userId')
+  updateUser(@Param('userId') userId: string,
+    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    body: updateUserDto,
+  ) {
+    return this.usersService.updateUser(userId, body);
   }
   // ====================================================================== \\
 }
