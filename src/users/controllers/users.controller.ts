@@ -11,6 +11,7 @@ import {
 import { UsersService } from '../services/users.service';
 import { createUserDto } from '../dto/createUserDto.dto';
 import { updateUserDto } from '../dto/updateUserDto.dto';
+import { Roles } from '../guards/Roles.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -19,6 +20,7 @@ export class UsersController {
   // @desc  Get All Users
   // @Route Get /users
   // @access  Private [Admin, Manger]
+  @Roles(['admin', 'Manger'])
   @Get()
   gatAllUsers() {
     return this.usersService.getAllUsers();
@@ -28,6 +30,7 @@ export class UsersController {
   // @desc  Get User By Id
   // @Route Get /users/:userId
   // @access  Private [Admin, Manger]
+  @Roles(['admin', 'Manger'])
   @Get(':userId')
   gatUsersById(@Param('userId') userId: string) {
     return this.usersService.gatUsersById(userId);
@@ -36,6 +39,7 @@ export class UsersController {
   // @desc  Create User
   // @Route Post /users
   // @access  Private [Admin]
+  @Roles(['admin'])
   @Post()
   createUser(
     @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
@@ -47,6 +51,7 @@ export class UsersController {
   // @desc  Update User By Id
   // @Route Patch /users/:userId
   // @access  Private [Admin, Manger]
+  @Roles(['admin', 'Manger'])
   @Patch(':userId')
   updateUser(
     @Param('userId') userId: string,
@@ -59,6 +64,7 @@ export class UsersController {
   // @desc  Delete User By Id
   // @Route Delete /users/:userId
   // @access  Private [Admin]
+  @Roles(['admin'])
   @Delete(':userId')
   deleteUser(@Param('userId') userId: string) {
     return this.usersService.deleteUser(userId);
